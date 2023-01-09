@@ -8,17 +8,16 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapHub<ChatHub>("/hubs/chat");
+app.UseEndpoints(endpoints => 
+{
+    endpoints.MapHub<ChatHub>("/hubs/chat");
+});
 
 if (builder.Environment.IsDevelopment())
 {
