@@ -4,7 +4,7 @@ import "reflect-metadata";
 import { createUid } from "../tools";
 
 interface ConnectConfig {
-    url: string;
+	url: string;
 }
 
 type MessageListener = (user: string, message: string) => void;
@@ -19,13 +19,13 @@ interface ChutHubService {
 @injectable()
 export class ChatHubService implements ChutHubService {
 	private _connection?: HubConnection;
-	private _listeners: {[key: string]: MessageListener} = {};
+	private _listeners: { [key: string]: MessageListener } = {};
 
 	public async connect(config: ConnectConfig): Promise<void> {
 		this._connection = new HubConnectionBuilder()
 			.withUrl(config.url)
 			.build();
-		
+
 		this._connection.on("MessageSent", (user, message) => {
 			for (const [_, listener] of Object.entries(this._listeners)) {
 				listener(user, message);
@@ -46,6 +46,9 @@ export class ChatHubService implements ChutHubService {
 	}
 
 	public async sendMessage(user: string, message: string): Promise<void> {
+		if (!this._connection) {
+			throw "Cannot send message! Connection is not established!";
+		}
 		return await this._connection?.invoke("SendMessage", user, message);
 	}
 }
