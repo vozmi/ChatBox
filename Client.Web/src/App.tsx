@@ -1,20 +1,17 @@
-import {HubConnectionBuilder} from "@microsoft/signalr";
 import { useEffect } from "react";
-
-const connection = new HubConnectionBuilder()
-	.withUrl("/hubs/chat")
-	.build();
-
-connection.on("MessageSent", (user, message) => {
-	console.log(user + " said: \"" + message + "\"");
-});
+import { DIcontainer, ChatHubService, TYPES } from "./services";
 
 const App = () => {
 	useEffect(() => {
-		connection.start()
-			.then(() => {
-				connection.invoke("SendMessage", "testUser", "Hey, Hi!");
-			});
+		const chat = DIcontainer.get<ChatHubService>(TYPES.CHAT_HUB_SERVICE);
+
+		chat.addMessageListener((user, message) => {
+			console.log(user, message);
+		});
+
+		chat.connect({ url: "/hubs/chat" }).then(() => {
+			chat.sendMessage("testUser", "Hello!");
+		});
 	}, []);
 	return <div>App</div>;
 };
