@@ -1,3 +1,3 @@
 export * from "./inversify.config";
-export * from "./chatHubService";
+export * from "./ChatHub";
 export * from "./TYPES";
