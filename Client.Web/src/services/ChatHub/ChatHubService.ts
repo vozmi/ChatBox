@@ -1,30 +1,25 @@
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { createUid } from "@/tools";
+import {
+	ConnectConfig,
+	ConnectionFacade,
+	ChatHubService as IChatHubService,
+	MessageListener,
+} from "@/types/services/ChatHubService";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import { injectable } from "inversify";
 import "reflect-metadata";
-import { createUid } from "../tools";
-
-interface ConnectConfig {
-	url: string;
-}
-
-type MessageListener = (user: string, message: string) => void;
-
-interface ChutHubService {
-	connect: (config: ConnectConfig) => Promise<void>;
-	addMessageListener: (listener: MessageListener) => string;
-	removeMessageListener: (listenerId: string) => boolean;
-	sendMessage: (user: string, message: string) => Promise<void>;
-}
 
 @injectable()
-export class ChatHubService implements ChutHubService {
-	private _connection?: HubConnection;
+export class ChatHubService implements IChatHubService {
+	private _connection?: ConnectionFacade;
 	private _listeners: { [key: string]: MessageListener } = {};
 
 	public async connect(config: ConnectConfig): Promise<void> {
-		this._connection = new HubConnectionBuilder()
+		const signalrConnection = new HubConnectionBuilder()
 			.withUrl(config.url)
 			.build();
+
+		this._connection = signalrConnection;
 
 		this._connection.on("MessageSent", (user, message) => {
 			for (const [_, listener] of Object.entries(this._listeners)) {
@@ -35,7 +30,7 @@ export class ChatHubService implements ChutHubService {
 		return await this._connection.start();
 	}
 
-	public addMessageListener(listener: MessageListener): string {
+	public addMessagesListener(listener: MessageListener): string {
 		const uid = createUid();
 		this._listeners[uid] = listener;
 		return uid;
@@ -49,6 +44,10 @@ export class ChatHubService implements ChutHubService {
 		if (!this._connection) {
 			throw "Cannot send message! Connection is not established!";
 		}
-		return await this._connection?.invoke("SendMessage", user, message);
+		return await this._connection?.invoke(
+			"SendMessage",
+			user,
+			message
+		);
 	}
 }

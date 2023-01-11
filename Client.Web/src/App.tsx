@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { DIcontainer, ChatHubService, TYPES } from "./services";
+import { ChatHubService, DIcontainer, TYPES } from "@/services";
 
 const App = () => {
 	useEffect(() => {
 		const chat = DIcontainer.get<ChatHubService>(TYPES.CHAT_HUB_SERVICE);
 
-		chat.addMessageListener((user, message) => {
+		chat.addMessagesListener((user, message) => {
 			console.log(user, message);
 		});
 

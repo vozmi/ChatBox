@@ -1,5 +1,5 @@
 import { Container } from "inversify";
-import { ChatHubService } from "./chatHubService";
+import { ChatHubService } from "./ChatHub/ChatHubService";
 import { TYPES } from "./TYPES";
 
 const DIcontainer = new Container();
