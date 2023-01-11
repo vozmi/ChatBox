@@ -18,6 +18,9 @@ module.exports = {
 	mode: process.env.NODE_ENV || "development",
 	resolve: {
 		extensions: [".tsx", ".ts", ".js"],
+		alias: {
+			"@": path.resolve(__dirname, "src")
+		}
 	},
 	module: {
 		rules: [
