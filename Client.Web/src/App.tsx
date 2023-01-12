@@ -1,5 +1,7 @@
-import { useEffect } from "react";
 import { ChatHubService, DIcontainer, TYPES } from "@/services";
+import { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {HomePage} from "./pages";
 
 const App = () => {
 	useEffect(() => {
@@ -13,7 +15,14 @@ const App = () => {
 			chat.sendMessage("testUser", "Hello!");
 		});
 	}, []);
-	return <div>App</div>;
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default App;
