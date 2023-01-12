@@ -21,6 +21,10 @@ export class ChatHubService implements IChatHubService {
 		return await this._connection.invoke(messageCode, ...args);
 	}
 
+	public get state() {
+		return this._connection?.state;
+	}
+
 	public async connect(config: ConnectConfig): Promise<void> {
 		const signalrConnection = new HubConnectionBuilder()
 			.withUrl(config.url)
