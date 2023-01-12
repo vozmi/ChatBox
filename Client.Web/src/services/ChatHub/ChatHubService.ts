@@ -43,6 +43,13 @@ export class ChatHubService implements IChatHubService {
 		return await this._connection.start();
 	}
 
+	public async disconnect(): Promise<void> {
+		this._connection.off("MessageSent");
+		this._listeners = {};
+
+		return await this._connection.start();
+	}
+
 	public addMessagesListener(listener: MessageListener): string {
 		const uid = createUid();
 		this._listeners[uid] = listener;
