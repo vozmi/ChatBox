@@ -30,7 +30,7 @@ export class ChatHubService implements IChatHubService {
 
 		this._connection.on("MessageSent", (user, message) => {
 			for (const [_, listener] of Object.entries(this._listeners)) {
-				listener(user, message);
+				listener({user, message});
 			}
 		});
 

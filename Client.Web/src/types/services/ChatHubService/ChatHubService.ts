@@ -18,7 +18,12 @@ export interface ConnectConfig {
 	url: string;
 }
 
-export type MessageListener = (user: string, message: string) => void;
+export interface Message {
+	user: string;
+	message: string;
+}
+
+export type MessageListener = (message: Message) => void;
 export interface ChatHubService {
 	connect: (config: ConnectConfig) => Promise<void>;
 	addMessagesListener: (listener: MessageListener) => string;
