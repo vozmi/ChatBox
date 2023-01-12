@@ -14,6 +14,14 @@ export class ChatHubService implements IChatHubService {
 	private _connection?: ConnectionFacade;
 	private _listeners: { [key: string]: MessageListener } = {};
 
+	private async invoke(messageCode: string, ...args: any[]) {
+		if (!this._connection) {
+			throw "Connection isn't established! Call connect method to create the connection.";
+		}
+
+		return await this._connection.invoke(messageCode, ...args);
+	}
+
 	public async connect(config: ConnectConfig): Promise<void> {
 		const signalrConnection = new HubConnectionBuilder()
 			.withUrl(config.url)
@@ -41,13 +49,6 @@ export class ChatHubService implements IChatHubService {
 	}
 
 	public async sendMessage(user: string, message: string): Promise<void> {
-		if (!this._connection) {
-			throw "Cannot send message! Connection is not established!";
-		}
-		return await this._connection?.invoke(
-			"SendMessage",
-			user,
-			message
-		);
+		return await this.invoke("SendMessage", user, message);
 	}
 }
