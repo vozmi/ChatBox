@@ -14,7 +14,7 @@ export interface ConnectionFacade {
 	onreconnected: (callback: (connectionId?: string) => void) => void;
 }
 
-export interface ConnectConfig {
+export interface ChatHubConfig {
 	url: string;
 }
 
@@ -25,7 +25,7 @@ export interface Message {
 
 export type MessageListener = (message: Message) => void;
 export interface ChatHubService {
-	connect: (config: ConnectConfig) => Promise<void>;
+	connect: () => Promise<void>;
 	addMessagesListener: (listener: MessageListener) => string;
 	removeMessageListener: (listenerId: string) => boolean;
 	sendMessage: (user: string, message: string) => Promise<void>;

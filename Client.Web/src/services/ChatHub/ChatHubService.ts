@@ -1,6 +1,6 @@
 import { createUid } from "@/tools";
 import {
-	ConnectConfig,
+	ChatHubConfig,
 	ConnectionFacade,
 	ChatHubService as IChatHubService,
 	MessageListener,
@@ -10,7 +10,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export class ChatHubService implements IChatHubService {
-	private _connection?: ConnectionFacade;
+	private _connection: ConnectionFacade;
 	private _listeners: { [key: string]: MessageListener } = {};
 
 	private async invoke(messageCode: string, ...args: any[]) {
@@ -21,17 +21,19 @@ export class ChatHubService implements IChatHubService {
 		return await this._connection.invoke(messageCode, ...args);
 	}
 
-	public get state() {
-		return this._connection?.state;
-	}
-
-	public async connect(config: ConnectConfig): Promise<void> {
+	constructor(config: ChatHubConfig) {
 		const signalrConnection = new HubConnectionBuilder()
 			.withUrl(config.url)
 			.build();
 
 		this._connection = signalrConnection;
+	}
 
+	public get state() {
+		return this._connection.state;
+	}
+
+	public async connect(): Promise<void> {
 		this._connection.on("MessageSent", (user, message) => {
 			for (const [_, listener] of Object.entries(this._listeners)) {
 				listener({user, message});
