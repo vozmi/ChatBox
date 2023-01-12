@@ -5,10 +5,13 @@ import { inject } from "inversify";
 import { makeObservable, observable } from "mobx";
 
 export class HomePageVM {
-	private _currentUser: string;
+	@inject(TYPES.STORE)
+	private _store!: Store;
 
-	@observable
-	private _chatHubService: ChatHubService;
+	@inject(TYPES.CHAT_HUB_SERVICE)
+	private _chatHubService!: ChatHubService;
+
+	private _currentUser: string;
 
 	@observable
 	public messages: Message[] = [];
@@ -16,14 +19,12 @@ export class HomePageVM {
 	@observable
 	public connectionState: ConnectionState;
 
-	constructor(
-		@inject(TYPES.STORE) store: Store,
-		@inject(TYPES.CHAT_HUB_SERVICE) chatHubService: ChatHubService
-	) {
+	constructor() {
 		makeObservable(this);
-		this._currentUser = store.user || "anonymus";
-		this._chatHubService = chatHubService;
-		this.connectionState = chatHubService.state;
+		this._currentUser = this._store.user || "anonymus";
+
+		this.connectionState = this._chatHubService.state;
+
 		this._chatHubService.addMessagesListener((message) => {
 			this.messages.push(message);
 		});
