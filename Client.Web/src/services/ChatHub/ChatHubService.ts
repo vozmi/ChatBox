@@ -7,7 +7,6 @@ import {
 } from "@/types/services/ChatHubService";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { injectable } from "inversify";
-import "reflect-metadata";
 
 @injectable()
 export class ChatHubService implements IChatHubService {
