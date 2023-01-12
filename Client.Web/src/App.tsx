@@ -11,7 +11,9 @@ const App = () => {
 		DIcontainer.rebind<ChatHubService>(
 			TYPES.CHAT_HUB_SERVICE
 		).toConstantValue(new ChatHubService({ url: "/hubs/chat" }));
-		Store.user = "vozmi";
+
+		const store = DIcontainer.get<Store>(TYPES.STORE);
+		store.user = "vozmi";
 	}, []);
 	/* #endregion */
 

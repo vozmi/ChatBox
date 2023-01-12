@@ -1,3 +1,4 @@
 export const TYPES = {
-	CHAT_HUB_SERVICE: Symbol.for("CHAT_HUB_SERVICE")
+	STORE: Symbol.for("STORE"),
+	CHAT_HUB_SERVICE: Symbol.for("CHAT_HUB_SERVICE"),
 };
