@@ -1,4 +1,3 @@
-import getDecorators from "inversify-inject-decorators";
 import { Container } from "inversify";
 import { ChatHubService } from "./ChatHub/ChatHubService";
 import { TYPES } from "./TYPES";
@@ -11,6 +10,4 @@ DIcontainer.bind<ServiceOptions>(TYPES.OPTIONS).to(ServiceOptions).inSingletonSc
 DIcontainer.bind<ChatHubService>(TYPES.CHAT_HUB_SERVICE).to(ChatHubService).inSingletonScope();
 DIcontainer.bind<Store>(TYPES.STORE).to(Store).inSingletonScope();
 
-const {lazyInject} = getDecorators(DIcontainer, false);
-
-export { DIcontainer, lazyInject };
+export { DIcontainer };
