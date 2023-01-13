@@ -15,6 +15,7 @@ module.exports = {
 		path: path.join(__dirname, "build"),
 		filename: "index.bundle.js",
 	},
+	devtool: "source-map",
 	mode: process.env.NODE_ENV || "development",
 	resolve: {
 		extensions: [".tsx", ".ts", ".js"],
