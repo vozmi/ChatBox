@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {HOME_PAGE_VM, HomePageVM} from "./HomePage.vm";
 import {DIcontainer} from "@/services";
+import {observer} from "mobx-react-lite";
 
-export const HomePage = () => {
+export const HomePage = observer(() => {
 	const [vm] = useState(() => DIcontainer.get<HomePageVM>(HOME_PAGE_VM));
 
 	return (
@@ -15,4 +16,4 @@ export const HomePage = () => {
 			<button onClick={() => vm.sendMessage("Hey!")}>Send message</button>
 		</div>
 	);
-};
+});
