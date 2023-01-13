@@ -33,6 +33,10 @@ class HomePageVM {
 		this._chatHubService.addMessagesListener((message) => {
 			this.messages.push(message);
 		});
+
+		if (this._chatHubService.state === "Disconnected") {
+			this._chatHubService.connect();
+		}
 	}
 
 	async sendMessage(message: string) {
