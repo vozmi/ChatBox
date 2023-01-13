@@ -50,9 +50,8 @@ export class ChatHubService implements IChatHubService {
 
 	public async disconnect(): Promise<void> {
 		this._connection.off("MessageSent");
-		this._listeners = {};
 
-		return await this._connection.start();
+		return await this._connection.stop();
 	}
 
 	public addMessagesListener(listener: MessageListener): string {
