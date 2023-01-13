@@ -6,7 +6,9 @@ import {
 	MessageListener,
 } from "@/types/services/ChatHubService";
 import { HubConnectionBuilder } from "@microsoft/signalr";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
+import {TYPES} from "../TYPES";
+import {ServiceOptions} from "../ServiceOptions";
 
 @injectable()
 export class ChatHubService implements IChatHubService {
@@ -21,9 +23,12 @@ export class ChatHubService implements IChatHubService {
 		return await this._connection.invoke(messageCode, ...args);
 	}
 
-	constructor(config: ChatHubConfig) {
+	constructor(
+		@inject(TYPES.OPTIONS)
+			options: ServiceOptions
+	) {
 		const signalrConnection = new HubConnectionBuilder()
-			.withUrl(config.url)
+			.withUrl(options.chatHubUrl)
 			.build();
 
 		this._connection = signalrConnection;
