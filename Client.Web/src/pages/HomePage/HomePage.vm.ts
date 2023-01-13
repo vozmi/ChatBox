@@ -1,15 +1,12 @@
-import { Store } from "@/data/store";
-import { ChatHubService, TYPES } from "@/services";
-import { ConnectionState, Message } from "@/types/services/ChatHubService";
-import { inject } from "inversify";
-import { makeObservable, observable } from "mobx";
+import {Store} from "@/data/store";
+import {ChatHubService, DIcontainer, TYPES} from "@/services";
+import {ConnectionState, Message} from "@/types/services/ChatHubService";
+import {inject, injectable} from "inversify";
+import {makeObservable, observable} from "mobx";
 
-export class HomePageVM {
-	@inject(TYPES.STORE)
-	private _store!: Store;
-
-	@inject(TYPES.CHAT_HUB_SERVICE)
-	private _chatHubService!: ChatHubService;
+@injectable()
+class HomePageVM {
+	private _chatHubService: ChatHubService;
 
 	private _currentUser: string;
 
@@ -19,9 +16,17 @@ export class HomePageVM {
 	@observable
 	public connectionState: ConnectionState;
 
-	constructor() {
+	constructor(
+		@inject(TYPES.STORE)
+			store: Store,
+		@inject(TYPES.CHAT_HUB_SERVICE)
+			chatHubService: ChatHubService,
+	) {
 		makeObservable(this);
-		this._currentUser = this._store.user || "anonymus";
+		
+		this._chatHubService = chatHubService;
+
+		this._currentUser = store.user || "anonymus";
 
 		this.connectionState = this._chatHubService.state;
 
@@ -37,3 +42,8 @@ export class HomePageVM {
 		);
 	}
 }
+
+export const HOME_PAGE_VM = Symbol.for("HOME_PAGE_VM");
+DIcontainer.bind<HomePageVM>(HOME_PAGE_VM).to(HomePageVM);
+
+export {HomePageVM};
