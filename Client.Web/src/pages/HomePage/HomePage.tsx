@@ -13,7 +13,13 @@ export const HomePage = observer(() => {
 					{m.message} ({m.user})
 				</p>
 			))}
-			<button onClick={() => vm.sendMessage("Hey!")}>Send message</button>
+			<form id="newMessageForm">
+				<input value={vm.newMessage} onChange={(e) => vm.newMessage = e.target.value} />
+				<button onClick={(e) => {
+					e.preventDefault();
+					vm.sendMessage();
+				}}>Send message</button>
+			</form>
 		</div>
 	);
 });

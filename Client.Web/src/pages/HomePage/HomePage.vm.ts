@@ -8,6 +8,7 @@ import {makeObservable, observable} from "mobx";
 class HomePageVM {
 	private _chatHubService: ChatHubService;
 
+	@observable
 	private _currentUser: string;
 
 	@observable
@@ -15,6 +16,9 @@ class HomePageVM {
 
 	@observable
 	public connectionState: ConnectionState;
+
+	@observable
+	public newMessage = "";
 
 	constructor(
 		@inject(TYPES.STORE)
@@ -39,11 +43,12 @@ class HomePageVM {
 		}
 	}
 
-	async sendMessage(message: string) {
-		return await this._chatHubService.sendMessage(
+	async sendMessage() {
+		await this._chatHubService.sendMessage(
 			this._currentUser,
-			message
+			this.newMessage
 		);
+		this.newMessage = "";
 	}
 }
 
