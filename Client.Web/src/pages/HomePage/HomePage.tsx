@@ -1,7 +1,8 @@
-import { useState } from "react";
-import {HOME_PAGE_VM, HomePageVM} from "./HomePage.vm";
+import {MessageForm} from "@/components";
 import {DIcontainer} from "@/services";
 import {observer} from "mobx-react-lite";
+import {useState} from "react";
+import {HOME_PAGE_VM, HomePageVM} from "./HomePage.vm";
 
 export const HomePage = observer(() => {
 	const [vm] = useState(() => DIcontainer.get<HomePageVM>(HOME_PAGE_VM));
@@ -9,17 +10,11 @@ export const HomePage = observer(() => {
 	return (
 		<div>
 			{vm.messages.map((m) => (
-				<p key={m.message + ":::" + m.user}>
-					{m.message} ({m.user})
+				<p key={m.body + ":::" + m.author}>
+					{m.body} ({m.author})
 				</p>
 			))}
-			<form id="newMessageForm">
-				<input value={vm.newMessage} onChange={(e) => vm.newMessage = e.target.value} />
-				<button onClick={(e) => {
-					e.preventDefault();
-					vm.sendMessage();
-				}}>Send message</button>
-			</form>
+			<MessageForm onSubmit={(m) => vm.sendMessage(m)} />
 		</div>
 	);
 });
