@@ -20,8 +20,8 @@ module.exports = {
 	resolve: {
 		extensions: [".tsx", ".ts", ".js"],
 		alias: {
-			"@": path.resolve(__dirname, "src")
-		}
+			"@": path.resolve(__dirname, "src"),
+		},
 	},
 	module: {
 		rules: [
@@ -36,8 +36,23 @@ module.exports = {
 				use: ["ts-loader"],
 			},
 			{
-				test: /\.(css|scss)$/,
+				test: /\.css$/,
+				use: [
+					"style-loader",
+					{
+						loader: "css-loader",
+						options: {
+							importLoaders: 1,
+							modules: true,
+						},
+					},
+				],
+				include: /\.module\.css$/,
+			},
+			{
+				test: /\.css$/,
 				use: ["style-loader", "css-loader"],
+				exclude: /\.module\.css$/,
 			},
 			{
 				test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,

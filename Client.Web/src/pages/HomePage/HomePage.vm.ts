@@ -12,7 +12,10 @@ class HomePageVM {
 	private _currentUser: string;
 
 	@observable
-	public messages: DTO.Message[] = [];
+	public messages: DTO.Message[] = [
+			{author: "user1", body: "Hey!", sent: "2023-01-15T12:30:10.1075553Z"},
+			{author: "user2", body: "Hi!", sent: "2023-01-15T12:31:10.1075553Z"},
+		];
 
 	@observable
 	public connectionState: ConnectionState;
