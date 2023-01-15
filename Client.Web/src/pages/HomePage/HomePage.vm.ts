@@ -1,6 +1,6 @@
 import {Store} from "@/data/store";
 import {ChatHubService, DIcontainer, TYPES} from "@/services";
-import {ConnectionState, Message} from "@/types/services/ChatHubService";
+import {ConnectionState} from "@/types/services/ChatHubService";
 import {inject, injectable} from "inversify";
 import {makeObservable, observable} from "mobx";
 
@@ -12,13 +12,10 @@ class HomePageVM {
 	private _currentUser: string;
 
 	@observable
-	public messages: Message[] = [];
+	public messages: DTO.Message[] = [];
 
 	@observable
 	public connectionState: ConnectionState;
-
-	@observable
-	public newMessage = "";
 
 	constructor(
 		@inject(TYPES.STORE)
@@ -43,12 +40,11 @@ class HomePageVM {
 		}
 	}
 
-	async sendMessage() {
+	async sendMessage(messageText: string) {
 		await this._chatHubService.sendMessage(
 			this._currentUser,
-			this.newMessage
+			messageText
 		);
-		this.newMessage = "";
 	}
 }
 

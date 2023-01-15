@@ -18,12 +18,7 @@ export interface ChatHubConfig {
 	url: string;
 }
 
-export interface Message {
-	user: string;
-	message: string;
-}
-
-export type MessageListener = (message: Message) => void;
+export type MessageListener = (message: DTO.Message) => void;
 export interface ChatHubService {
 	connect: () => Promise<void>;
 	disconnect: () => Promise<void>;

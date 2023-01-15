@@ -1,14 +1,13 @@
-import { createUid } from "@/tools";
+import {createUid} from "@/tools";
 import {
-	ChatHubConfig,
 	ConnectionFacade,
 	ChatHubService as IChatHubService,
-	MessageListener,
+	MessageListener
 } from "@/types/services/ChatHubService";
-import { HubConnectionBuilder } from "@microsoft/signalr";
-import { inject, injectable } from "inversify";
-import {TYPES} from "../TYPES";
+import {HubConnectionBuilder} from "@microsoft/signalr";
+import {inject, injectable} from "inversify";
 import {ServiceOptions} from "../ServiceOptions";
+import {TYPES} from "../TYPES";
 
 @injectable()
 export class ChatHubService implements IChatHubService {
@@ -39,9 +38,9 @@ export class ChatHubService implements IChatHubService {
 	}
 
 	public async connect(): Promise<void> {
-		this._connection.on("MessageSent", (user, message) => {
+		this._connection.on("MessageSent", (message: DTO.Message) => {
 			for (const [_, listener] of Object.entries(this._listeners)) {
-				listener({user, message});
+				listener(message);
 			}
 		});
 
