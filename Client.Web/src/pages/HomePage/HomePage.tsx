@@ -10,7 +10,7 @@ export const HomePage = observer(() => {
 	const [vm] = useState(() => DIcontainer.get<HomePageVM>(HOME_PAGE_VM));
 
 	return (
-		<div>
+		<div id="home-page">
 			<ObservableMessageList data={vm.messages} />
 			<MessageForm onSubmit={(m) => vm.sendMessage(m)} />
 		</div>
