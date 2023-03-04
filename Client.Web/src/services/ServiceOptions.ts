@@ -1,6 +1,7 @@
-import {injectable} from "inversify";
+import {fluentProvide} from "inversify-binding-decorators";
+import {TYPES} from "./TYPES";
 
-@injectable()
+@fluentProvide(TYPES.OPTIONS).inSingletonScope().done()
 export class ServiceOptions {
 	public chatHubUrl = "/hubs/chat";
 }

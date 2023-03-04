@@ -5,11 +5,12 @@ import {
 	MessageListener
 } from "@/types/services/ChatHubService";
 import {HubConnectionBuilder} from "@microsoft/signalr";
-import {inject, injectable} from "inversify";
+import {inject} from "inversify";
+import {fluentProvide} from "inversify-binding-decorators";
 import {ServiceOptions} from "../ServiceOptions";
 import {TYPES} from "../TYPES";
 
-@injectable()
+@fluentProvide(TYPES.CHAT_HUB_SERVICE).inSingletonScope().done()
 export class ChatHubService implements IChatHubService {
 	private _connection: ConnectionFacade;
 	private _listeners: { [key: string]: MessageListener } = {};

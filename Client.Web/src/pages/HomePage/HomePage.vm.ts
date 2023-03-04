@@ -1,20 +1,23 @@
 import {Store} from "@/data/store";
-import {ChatHubService, DIcontainer, TYPES} from "@/services";
+import {ChatHubService} from "@/services/ChatHub/ChatHubService";
+import {TYPES} from "@/services/TYPES";
 import {ConnectionState} from "@/types/services/ChatHubService";
-import {inject, injectable} from "inversify";
+import {inject} from "inversify";
+import {provide} from "inversify-binding-decorators";
 import {makeObservable, observable} from "mobx";
 
-@injectable()
+@provide(HomePageVM)
 class HomePageVM {
-	private _chatHubService: ChatHubService;
+	@inject(TYPES.CHAT_HUB_SERVICE)
+	public _chatHubService!: ChatHubService;
 
 	@observable
 	private _currentUser: string;
 
 	@observable
 	public messages: DTO.Message[] = [
-			{author: "user1", body: "Hey!", sent: "2023-01-15T12:30:10.1075553Z"},
-			{author: "user2", body: "Hi!", sent: "2023-01-15T12:31:10.1075553Z"},
+			{ author: "user1", body: "Hey!", sent: "2023-01-15T12:30:10.1075553Z" },
+			{ author: "user2", body: "Hi!", sent: "2023-01-15T12:31:10.1075553Z" },
 		];
 
 	@observable
@@ -24,14 +27,13 @@ class HomePageVM {
 		@inject(TYPES.STORE)
 			store: Store,
 		@inject(TYPES.CHAT_HUB_SERVICE)
-			chatHubService: ChatHubService,
+			chatHubService: ChatHubService
 	) {
 		makeObservable(this);
-		
+
 		this._chatHubService = chatHubService;
 
 		this._currentUser = store.user || "anonymus";
-
 		this.connectionState = this._chatHubService.state;
 
 		this._chatHubService.addMessagesListener((message) => {
@@ -44,14 +46,9 @@ class HomePageVM {
 	}
 
 	async sendMessage(messageText: string) {
-		await this._chatHubService.sendMessage(
-			this._currentUser,
-			messageText
-		);
+		await this._chatHubService.sendMessage(this._currentUser, messageText);
 	}
 }
 
-export const HOME_PAGE_VM = Symbol.for("HOME_PAGE_VM");
-DIcontainer.bind<HomePageVM>(HOME_PAGE_VM).to(HomePageVM);
-
 export {HomePageVM};
+

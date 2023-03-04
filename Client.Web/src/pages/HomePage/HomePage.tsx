@@ -1,13 +1,13 @@
 import {MessageForm, MessageList} from "@/components";
-import {DIcontainer} from "@/services";
+import {DIcontainer} from "@/services/container";
 import {observer} from "mobx-react-lite";
-import {useState} from "react";
-import {HOME_PAGE_VM, HomePageVM} from "./HomePage.vm";
+import {HomePageVM} from "./HomePage.vm";
+import "./home-page.css";
 
 const ObservableMessageList = observer(MessageList);
 
 export const HomePage = observer(() => {
-	const [vm] = useState(() => DIcontainer.get<HomePageVM>(HOME_PAGE_VM));
+	const vm = DIcontainer.get(HomePageVM);
 
 	return (
 		<div id="home-page">
