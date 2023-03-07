@@ -1,17 +1,18 @@
-import { createUid } from "@/tools";
+import {createUid} from "@/tools";
 import {
-	ConnectConfig,
 	ConnectionFacade,
 	ChatHubService as IChatHubService,
-	MessageListener,
+	MessageListener
 } from "@/types/services/ChatHubService";
-import { HubConnectionBuilder } from "@microsoft/signalr";
-import { injectable } from "inversify";
-import "reflect-metadata";
+import {HubConnectionBuilder} from "@microsoft/signalr";
+import {inject} from "inversify";
+import {fluentProvide} from "inversify-binding-decorators";
+import {ServiceOptions} from "../ServiceOptions";
+import {TYPES} from "../TYPES";
 
-@injectable()
+@fluentProvide(TYPES.CHAT_HUB_SERVICE).inSingletonScope().done()
 export class ChatHubService implements IChatHubService {
-	private _connection?: ConnectionFacade;
+	private _connection: ConnectionFacade;
 	private _listeners: { [key: string]: MessageListener } = {};
 
 	private async invoke(messageCode: string, ...args: any[]) {
@@ -22,20 +23,35 @@ export class ChatHubService implements IChatHubService {
 		return await this._connection.invoke(messageCode, ...args);
 	}
 
-	public async connect(config: ConnectConfig): Promise<void> {
+	constructor(
+		@inject(TYPES.OPTIONS)
+			options: ServiceOptions
+	) {
 		const signalrConnection = new HubConnectionBuilder()
-			.withUrl(config.url)
+			.withUrl(options.chatHubUrl)
 			.build();
 
 		this._connection = signalrConnection;
+	}
 
-		this._connection.on("MessageSent", (user, message) => {
+	public get state() {
+		return this._connection.state;
+	}
+
+	public async connect(): Promise<void> {
+		this._connection.on("MessageSent", (message: DTO.Message) => {
 			for (const [_, listener] of Object.entries(this._listeners)) {
-				listener(user, message);
+				listener(message);
 			}
 		});
 
 		return await this._connection.start();
+	}
+
+	public async disconnect(): Promise<void> {
+		this._connection.off("MessageSent");
+
+		return await this._connection.stop();
 	}
 
 	public addMessagesListener(listener: MessageListener): string {

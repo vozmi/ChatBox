@@ -14,13 +14,14 @@ export interface ConnectionFacade {
 	onreconnected: (callback: (connectionId?: string) => void) => void;
 }
 
-export interface ConnectConfig {
+export interface ChatHubConfig {
 	url: string;
 }
 
-export type MessageListener = (user: string, message: string) => void;
+export type MessageListener = (message: DTO.Message) => void;
 export interface ChatHubService {
-	connect: (config: ConnectConfig) => Promise<void>;
+	connect: () => Promise<void>;
+	disconnect: () => Promise<void>;
 	addMessagesListener: (listener: MessageListener) => string;
 	removeMessageListener: (listenerId: string) => boolean;
 	sendMessage: (user: string, message: string) => Promise<void>;
