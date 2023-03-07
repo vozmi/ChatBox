@@ -1,0 +1,15 @@
+.message {
+    display: flex;
+    flex-flow: column;
+    margin: 0;
+}
+
+.message__author {
+    font-size: 11px;
+    color: gray;
+}
+
+.message__body {
+    font-size: 15px;
+    margin-top: 2px;
+}

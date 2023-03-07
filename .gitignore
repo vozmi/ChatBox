@@ -1,0 +1,4 @@
+Server/*/bin
+Server/*/obj
+.vscode
+node_modules

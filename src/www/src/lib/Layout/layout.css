@@ -1,0 +1,7 @@
+#layout {
+    display: flex;
+    height: 60vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
