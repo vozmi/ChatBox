@@ -1,4 +1,4 @@
-Server/*/bin
-Server/*/obj
+bin
+obj
 .vscode
 node_modules

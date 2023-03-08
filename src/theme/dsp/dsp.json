@@ -1,10 +1,10 @@
 {
-  "dsp_spec_version": "0.0.1",
+  "dsp_spec_version": "0.93",
   "last_updated_by": "",
-  "last_updated": "2023-03-07T23:00:31.000Z",
+  "last_updated": "2022-03-30T17:34:16.000Z",
   "settings": {
     "name": "Material",
-    "package_version": "0.0.1",
+    "package_version": "0.93",
     "build_tool": "StyleDictionary",
     "snippet_trigger_prefix": "md_",
     "build_status_label": "dev",
