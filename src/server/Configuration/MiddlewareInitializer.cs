@@ -1,6 +1,6 @@
-using ChatService.Hubs;
+using ChatBox.Server.Hubs;
 
-namespace ChatService.Configuration;
+namespace ChatBox.Server.Configuration;
 public static partial class MiddlewareInitializer
 {
     public static WebApplication RegisterMiddlewares(this WebApplication app)

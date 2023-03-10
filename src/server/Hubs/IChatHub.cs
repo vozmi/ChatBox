@@ -1,7 +1,7 @@
-using ChatService.Models;
+using ChatBox.Server.Models;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ChatService.Hubs;
+namespace ChatBox.Server.Hubs;
 public interface IChatHub
 {
     [HubMethodName("MessageSent")]

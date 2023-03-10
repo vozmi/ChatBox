@@ -1,4 +1,4 @@
-using ChatService.Configuration;
+using ChatBox.Server.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

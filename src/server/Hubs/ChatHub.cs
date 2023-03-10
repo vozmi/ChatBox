@@ -1,7 +1,7 @@
-using ChatService.Models;
+using ChatBox.Server.Models;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ChatService.Hubs;
+namespace ChatBox.Server.Hubs;
 public class ChatHub : Hub<IChatHub>
 {
     public async Task SendMessage(string user, string message)

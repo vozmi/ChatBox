@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ChatService.Models;
+namespace ChatBox.Server.Models;
 public class Message
 {
     [Required]
