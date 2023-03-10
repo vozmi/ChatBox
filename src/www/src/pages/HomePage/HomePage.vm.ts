@@ -4,12 +4,11 @@ import {TYPES} from "@/services/TYPES";
 import {ConnectionState} from "@/types/services/ChatHubService";
 import {inject} from "inversify";
 import {provide} from "inversify-binding-decorators";
-import {makeObservable, observable} from "mobx";
+import {computed, makeObservable, observable} from "mobx";
 
 @provide(HomePageVM)
 class HomePageVM {
-	@inject(TYPES.CHAT_HUB_SERVICE)
-	public _chatHubService!: ChatHubService;
+	private _chatHubService!: ChatHubService;
 
 	@observable
 	private _currentUser: string;
@@ -20,8 +19,10 @@ class HomePageVM {
 			{ author: "user2", body: "Hi!", sent: "2023-01-15T12:31:10.1075553Z" },
 		];
 
-	@observable
-	public connectionState: ConnectionState;
+	@computed
+	public get connectionState(): ConnectionState | null {
+		return this._chatHubService?.state || null;
+	}
 
 	constructor(
 		@inject(TYPES.STORE)
@@ -34,7 +35,6 @@ class HomePageVM {
 		this._chatHubService = chatHubService;
 
 		this._currentUser = store.user || "anonymus";
-		this.connectionState = this._chatHubService.state;
 
 		this._chatHubService.addMessagesListener((message) => {
 			this.messages.push(message);
