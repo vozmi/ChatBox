@@ -1,5 +1,5 @@
 import {Message} from "../Message";
-import "./message-list.css";
+import css from "./message-list.module.css";
 
 interface Props {
 	data: DTO.Message[];
@@ -8,7 +8,7 @@ interface Props {
 export const MessageList: React.FC<Props> = ({data}) => {
 
 	return (
-		<div className="message-list">
+		<div className={css.messageList}>
 			{data.map((m) => (
 				<div key={`${m.author}::${m.sent}`}>
 					<Message data={m} />

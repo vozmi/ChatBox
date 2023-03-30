@@ -1,4 +1,4 @@
-import "./message.css";
+import css from "./message.module.css";
 
 interface Props {
 	data: DTO.Message;
@@ -6,9 +6,9 @@ interface Props {
 
 export const Message: React.FC<Props> = ({ data }) => {
 	return (
-		<p className="message">
-			<span className="message__author">{data.author}</span>
-			<span className="message__body">{data.body}</span>
+		<p className={css.message}>
+			<span className={css.message__author}>{data.author}</span>
+			<span className={css.message__body}>{data.body}</span>
 		</p>
 	);
 };

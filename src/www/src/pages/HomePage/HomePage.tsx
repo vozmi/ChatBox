@@ -6,7 +6,7 @@ import {DIcontainer} from "@/services/container";
 import {observer} from "mobx-react-lite";
 import {useEffect} from "react";
 import {HomePageVM} from "./HomePage.vm";
-import "./home-page.css";
+import css from "./home-page.module.css";
 
 const ObservableMessageList = observer(MessageList);
 
@@ -32,7 +32,7 @@ export const HomePage = observer(() => {
 
 	return (
 		<Layout>
-			<div id="home-page">
+			<div className={css.homePage}>
 				<ObservableMessageList data={vm.messages} />
 				<MessageForm onSubmit={(m) => vm.sendMessage(m)} />
 			</div>

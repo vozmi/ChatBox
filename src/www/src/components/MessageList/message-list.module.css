@@ -1,4 +1,4 @@
-.message-list {
+.messageList {
     display: flex;
     flex-flow: column;
     gap: 0.5rem;

@@ -1,8 +1,8 @@
 import {ReactNode} from "react";
-import "./layout.css";
+import css from "./layout.module.css";
 
 export const Layout: React.FC<{children: ReactNode}> = ({children}) => {
 	return (
-		<div id="layout">{children}</div>
+		<div className={css.layout}>{children}</div>
 	);
 };
