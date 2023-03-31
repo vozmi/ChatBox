@@ -33,7 +33,7 @@ export const MessageForm: React.FC<MessageFormProps> = ({
 	};
 
 	return (
-		<form id="newMessageForm" onSubmit={onFormSubmit}>
+		<form id="newMessageForm" style={{display: "flex", gap: 10, marginTop: 10}} onSubmit={onFormSubmit}>
 			<input value={message} onChange={onInputChange} />
 			<Button type="submit">Send message</Button>
 		</form>
