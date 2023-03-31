@@ -18,6 +18,9 @@
     background: var(--md-sys-color-on-primary-container);
     opacity: 0;
     border-radius: 18px;
+    transition-duration: .2s;
+    transition-property: transform,opacity;
+    transition-timing-function: cubic-bezier(.2,0,0,1);
 }
 
 .cb-btn:hover::before {
