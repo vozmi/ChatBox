@@ -1,3 +1,4 @@
+/* #region Button */
 .cb-btn {
     display: flex;
     justify-content: center;
@@ -9,7 +10,9 @@
     background: var(--md-sys-color-primary-container);
     border: none;
 }
+/* #endregion */
 
+/* #region State layer */
 .cb-btn::before {
     content: "";
     position: absolute;
@@ -23,6 +26,19 @@
     transition-timing-function: cubic-bezier(.2,0,0,1);
 }
 
+.cb-btn:disabled {
+    background: none;
+    opacity: 1;
+}
+.cb-btn:disabled::before {
+    background: var(--md-sys-color-on-surface) !important;
+    opacity: 12% !important;
+}
+.cb-btn:disabled > span {
+    color: var(--md-sys-color-on-surface) !important;
+    opacity: 38% !important;
+}
+
 .cb-btn:hover::before {
     opacity: var(--md-sys-state-hover-state-layer-opacity);
 }
@@ -30,7 +46,10 @@
 .cb-btn:focus::before {
     opacity: var(--md-sys-state-focus-state-layer-opacity);
 }
+/* #endregion */
 
+/* #region Content */
 .cb-btn > span {
     color: var(--md-sys-color-on-primary-container);
 }
+/* #endregion */
