@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {HomePage} from "./pages";
+import "@/lib/variables.css";
 
 const App = () => {
 

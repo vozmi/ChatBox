@@ -1,5 +1,6 @@
 import {ChangeEvent, FormEvent} from "react";
 import {useMessageForm} from "./useMessageForm";
+import { Button } from "@/lib";
 
 interface MessageFormProps {
 	initialValue?: string;
@@ -34,7 +35,7 @@ export const MessageForm: React.FC<MessageFormProps> = ({
 	return (
 		<form id="newMessageForm" onSubmit={onFormSubmit}>
 			<input value={message} onChange={onInputChange} />
-			<button type="submit">Send message</button>
+			<Button type="submit">Send message</Button>
 		</form>
 	);
 };

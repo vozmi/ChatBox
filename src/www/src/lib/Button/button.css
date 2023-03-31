@@ -1,0 +1,33 @@
+.cb-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 36px;
+    padding: 8px 18px;
+    border-radius: 18px;
+    background: var(--md-sys-color-primary-container);
+    border: none;
+}
+
+.cb-btn::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--md-sys-color-on-primary-container);
+    opacity: 0;
+    border-radius: 18px;
+}
+
+.cb-btn:hover::before {
+    opacity: var(--md-sys-state-hover-state-layer-opacity);
+}
+
+.cb-btn:focus::before {
+    opacity: var(--md-sys-state-focus-state-layer-opacity);
+}
+
+.cb-btn > span {
+    color: var(--md-sys-color-on-primary-container);
+}
